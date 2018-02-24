@@ -27,7 +27,7 @@ on_ft = 'python'
 
 [[plugins]]
 repo = 'andviro/flake8-vim'
-on_ft = 'python'
+on_ft = ['python']
 
 [[plugins]]
 repo = 'fatih/vim-go'
@@ -42,34 +42,6 @@ on_ft = ['md', 'markdown']
 repo  = 'Quramy/tsuquyomi'
 on_ft = ['typescript']
 
-# インサートモードに入ったら読み込む
-[[plugins]]
-repo = 'Shougo/neocomplcache.vim'
-depends = 'context_filetype.vim'
-if = "has('lua')"
-on_i = 1
-hook_add = '''
-" neocomplcacheの設定
-" Disable AutoComplPop.
-let g:acp_enableAtStartup = 0
-
-" Use neocomplcache.
-let g:neocomplcache_enable_at_startup = 1
-
-" Use smartcase.
-let g:neocomplcache_enable_smart_case = 1
-
-" Set minimum syntax keyword length.
-let g:neocomplcache_min_syntax_length = 3
-let g:neocomplcache_lock_buffer_name_pattern = '\*ku\*'
-
-let g:neocomplcache_enable_camel_case_completion = 1
-let g:neocomplcache_enable_underbar_completion = 1
-'''
-
-[[plugins]]
-repo = 'shougo/neocomplcache-rsense.vim'
-
 [[plugins]]
 repo = 'Shougo/deoplete.nvim'
 depends = 'context_filetype.vim'
@@ -78,7 +50,6 @@ on_i = 1
 hook_source = '''
 source ~/.config/nvim/plugins/deoplete.rc.vim
 '''
-# neosnippet----------------
 
 [[plugins]]
 repo = 'Shougo/neosnippet.vim'
@@ -115,3 +86,28 @@ repo = 'Shougo/context_filetype.vim'
 [[plugins]]
 repo = 'tpope/vim-endwise'
 on_ft = 'ruby'
+
+[[plugins]]
+repo = 'tpope/vim-rails'
+on_ft = 'ruby'
+
+[[plugins]]
+repo = 'hdima/python-syntax'
+on_ft = 'python'
+[[plugins]]
+repo = 'jelera/vim-javascript-syntax'
+on_ft = 'javascript'
+
+[[plugins]]
+repo = 'ternjs/tern_for_vim'
+on_ft = 'javascript'
+
+[[plugins]]
+repo = 'othree/html5.vim'
+
+[[plugins]]
+repo = 'hail2u/vim-css3-syntax'
+
+[[plugins]]
+repo = 'tekkoc/PHPSnippetsCreator' 
+on_ft = 'php'
