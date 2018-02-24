@@ -8,4 +8,5 @@ directory<br>
 設定によっては.vimrcのdeinへのパスを変更すること。<br>
 nepcompleteなどは<br>
 vim --version | grep lua <br> 
-でluaがインストールされていることを確認すること。
+でluaがインストールされていることを確認すること。<br>
+ctagsをインストールしないと、tagbarは使えないのでbrewか何かでインストール<br>
