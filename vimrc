@@ -1,4 +1,11 @@
+set expandtab " タブを半角スペースにする
 set fileencoding=utf-8 " 保存時の文字コード
+"vim-syntastic/syntasticので必要な設定の一部だけど,SyntasticStatuslineFlag()でエラーが起きるのでここに記載
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+"---------end--syntastic--preference--------
+
 set fileencodings=ucs-boms,utf-8,euc-jp,cp932 " 読み込み時の文字コードの自動判別. 左側が優先される
 set fileformats=unix,dos,mac " 改行コードの自動判別. 左側が優先される
 set ambiwidth=double " □や○文字が崩れる問題を解決
@@ -22,17 +29,15 @@ set laststatus=2
 set statusline=%<%f\ %m%r%h%w%{'['.(&fenc!=''?&fenc:&enc).']['.&ff.']'}%=%l,%c%V%8P
 " " ステータス行に現在のgitブランチを表示する
 set statusline+=%{fugitive#statusline()})}])]})
-
+set nobackup "  バックアップファイルを作らない
 " カーソルが何行目の何列目に置かれているかを表示する
 set ruler
-
+set clipboard=unnamed,autoselect
 " 自動的に閉じ括弧を入力
 """"""""""""""""""""""""""""""
-imap { {}<LEFT>
-imap [ []<LEFT>
-imap ( ()<LEFT>
-imap ' ''<LEFT>
-imap ' ""<LEFT>
+"imap { {}<LEFT>
+"imap [ []<LEFT>
+"imap ( ()<LEFT>
 """"""""""""""""""""""""""""""
 
 " 行が折り返し表示されていた場合、行単位ではなく表示行単位でカーソルを移動する
@@ -80,8 +85,6 @@ nnoremap <silent><Esc><Esc> :<C-u>set nohlsearch!<CR>
 autocmd BufRead,BufNewFile *.py setfiletype python
 autocmd BufRead,BufNewFile *.rb setfiletype ruby
 
-set clipboard=unnamed,autoselect
-set number
 
 """"""""""""""""""""""""""""""
 " 最後のカーソル位置を復元する
@@ -122,13 +125,8 @@ if dein#load_state(s:dein_path)
   call dein#load_toml(s:toml,      {'lazy': 0})
   call dein#load_toml(s:lazy_toml, {'lazy': 1})
   call dein#add('morhetz/gruvbox')
-  call dein#add('itchyny/lightline.vim')
   call dein#add("Shougo/neocomplete.vim")
 "----------------------------------------------------------
-set laststatus=2 " ステータスラインを常に表示
-set showmode " 現在のモードを表示
-set showcmd " 打ったコマンドをステータスラインの下に表示
-set ruler " ステータスラインの右側にカーソルの現在位置を表示する
   call dein#end()
 
   call dein#save_state()
@@ -141,10 +139,50 @@ let NERDTreeShowHidden = 1
 autocmd VimEnter * execute 'NERDTree'
 "--------------------------------------------------------
 
-" Required:
-filetype plugin indent on
-syntax enable
+" TagBar
+let g:tagbar_right = 1
+let g:tagbar_width = 30
+let g:tagbar_updateonsave_maxlines = 10000
+let g:tagbar_sort = 0
 
+"neocompleteの設定---------------------------------------
+ " 起動時に有効化
+let g:neocomplete#enable_at_startup = 1
+" 大文字が入力されるまで大文字小文字の区別を無視する
+let g:neocomplete#enable_smart_case = 1
+" _(アンダースコア)区切りの補完を有効化
+let g:neocomplete#enable_underbar_completion = 1
+let g:neocomplete#enable_camel_case_completion  =  1
+" ポップアップメニューで表示される候補の数
+let g:neocomplete#max_list = 20
+" シンタックスをキャッシュするときの最小文字長
+let g:neocomplete#sources#syntax#min_keyword_length = 3
+" 補完を表示する最小文字数
+let g:neocomplete#auto_completion_start_length = 2
+" preview window を閉じない
+let g:neocomplete#enable_auto_close_preview = 0
+
+let g:neocomplete#max_keyword_width = 10000
+
+
+if !exists('g:neocomplete#delimiter_patterns')
+  let g:neocomplete#delimiter_patterns= {}
+endif
+let g:neocomplete#delimiter_patterns.ruby = ['::']
+
+if !exists('g:neocomplete#same_filetypes')
+  let g:neocomplete#same_filetypes = {}
+endif
+let g:neocomplete#same_filetypes.ruby = 'eruby'
+
+if !exists('g:neocomplete#force_omni_input_patterns')
+  let g:neocomplete#force_omni_input_patterns = {}
+endif
+
+let g:neocomplete#force_omni_input_patterns.cpp = '[^.[:digit:] *\t]\%(\.\|->\)\w*\|\h\w*::\w*'
+let g:neocomplete#force_omni_input_patterns.typescript = '[^. \t]\.\%(\h\w*\)\?' " Same as JavaScript
+let g:neocomplete#force_omni_input_patterns.go = '[^. \t]\.\%(\h\w*\)\?'         " Same as JavaScript
+"end------------------------------------------------------
 
 " === gruvbox ===
 colorscheme gruvbox
@@ -169,12 +207,6 @@ if dein#check_install()
 endif
 "End dein Scripts-------------------------
 
-if !exists('g:neocomplcache_omni_patterns')
-    let g:neocomplcache_omni_patterns = {}
-endif
-let g:neocomplcache_omni_patterns.ruby = '[^. *\t]\.\w*\|\h\w*::'
-autocmd FileType ruby setlocal omnifunc=rubycomplete#Complete
-
-"rsenseのインストールフォルダがデフォルトと異なるので設定
-let g:rsenseHome = expand("/usr/local/bin/rsense")
-let g:rsenseUseOmniFunc = 1
+" Required:
+filetype plugin indent on
+s
